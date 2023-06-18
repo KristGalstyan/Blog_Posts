@@ -1,4 +1,5 @@
 import express from 'express'
+import multer from 'multer'
 
 import mongoose from 'mongoose'
 
@@ -25,16 +26,34 @@ mongoose
 
 const app = express()
 
+const storage = multer.diskStorage({
+  destination: (_, __, cb) => {
+    cb(null, 'uploads')
+  },
+  filename: (_, file, cb) => {
+    cb(null, file.originalname)
+  }
+})
+
+const upload = multer({ storage })
+
 app.use(express.json())
+app.use('/uploads', express.static('uploads'))
 
 app.post('/auth/login', loginValidation, login)
 app.post('/auth/register', registerValidation, register)
 app.get('/auth/me', checkAuth, getMe)
 
+app.post('/upload', checkAuth, upload.single('image'), (req, res) => {
+  res.json({
+    url: `/uploads/${req.file.originalname}`
+  })
+})
+
 app.get('/posts', getAll)
 app.get('/posts/:id', getOne)
 app.post('/posts', checkAuth, postCreateValidation, create)
 app.delete('/posts/:id', checkAuth, remove)
-app.patch('/posts/:id', update)
+app.patch('/posts/:id', checkAuth, postCreateValidation, update)
 
 app.listen(process.env.PORT)
