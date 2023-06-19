@@ -13,6 +13,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.27.2",
     "clsx": "^1.1.1",
+    "cross-env": "^7.0.3",
     "easymde": "^2.16.1",
     "prettier": "^2.6.2",
     "react": "^18.1.0",
@@ -27,7 +28,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "cross-env PORT=3006 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

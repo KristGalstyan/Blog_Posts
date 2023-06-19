@@ -2,7 +2,7 @@ import express from 'express'
 import multer from 'multer'
 
 import mongoose from 'mongoose'
-
+import cors from 'cors'
 import {
   registerValidation,
   loginValidation,
@@ -21,6 +21,7 @@ import {
 } from './controllers/import.js'
 
 import { checkAuth, handleValidationError } from './utils/import.js'
+import { getLastTags } from './controllers/PostController.js'
 
 mongoose
   .connect(process.env.DATA_BASE)
@@ -41,6 +42,8 @@ const storage = multer.diskStorage({
 const upload = multer({ storage })
 
 app.use(express.json())
+app.use(cors())
+
 app.use('/uploads', express.static('uploads'))
 
 app.post('/auth/login', loginValidation, handleValidationError, login)
@@ -54,6 +57,7 @@ app.post('/upload', checkAuth, upload.single('image'), (req, res) => {
 })
 
 app.get('/posts', getAll)
+app.get('/tags', getLastTags)
 app.get('/posts/:id', getOne)
 app.post(
   '/posts',

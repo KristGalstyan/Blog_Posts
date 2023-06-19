@@ -51,6 +51,7 @@ export const Post = ({
           alt={title}
         />
       )}
+
       <div className={styles.wrapper}>
         <UserInfo {...user} additionalText={createdAt} />
         <div className={styles.indention}>
@@ -60,11 +61,12 @@ export const Post = ({
             {isFullPost ? title : <Link to={`/posts/${_id}`}>{title}</Link>}
           </h2>
           <ul className={styles.tags}>
-            {tags.map((name) => (
-              <li key={name}>
-                <Link to={`/tag/${name}`}>#{name}</Link>
-              </li>
-            ))}
+            {tags ||
+              [].map((name, i) => (
+                <li key={name + i}>
+                  <Link to={`/tag/${name}`}>#{name}</Link>
+                </li>
+              ))}
           </ul>
           {children && <div className={styles.content}>{children}</div>}
           <ul className={styles.postDetails}>
