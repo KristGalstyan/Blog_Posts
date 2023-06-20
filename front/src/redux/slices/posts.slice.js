@@ -4,7 +4,6 @@ const API_URL = 'http://localhost:4444/'
 
 export const api = createApi({
   reducerPath: 'api',
-  tagTypes: ['posts'],
   baseQuery: fetchBaseQuery({
     baseUrl: API_URL
   }),
@@ -14,8 +13,11 @@ export const api = createApi({
     }),
     getTags: builder.query({
       query: () => '/tags'
+    }),
+    getPostsById: builder.query({
+      query: (id) => `/posts/${id}`
     })
   })
 })
 
-export const { useFetchPostQuery, useGetTagsQuery } = api
+export const { useFetchPostQuery, useGetTagsQuery, useGetPostsByIdQuery } = api
