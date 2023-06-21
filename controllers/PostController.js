@@ -40,6 +40,7 @@ export const getOne = async (req, res) => {
       { $inc: { viewsCount: 1 } },
       { returnDocument: 'after' }
     )
+      .populate('user')
       .then((found) => {
         res.json(found)
       })
