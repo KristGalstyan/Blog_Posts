@@ -22,13 +22,22 @@ import {
 
 import { checkAuth, handleValidationError } from './utils/import.js'
 import { getLastTags } from './controllers/PostController.js'
-
+import session from 'express-session'
 mongoose
   .connect(process.env.DATA_BASE)
   .then(() => console.log('DB ok'))
   .catch((err) => console.log('DB error', err))
 
 const app = express()
+
+app.use(
+  session({
+    name: 'cokie',
+    secret: process.env.SESSION_SECRET,
+    cookie: { maxAge: 5000 },
+    saveUninitialized: false
+  })
+)
 
 const storage = multer.diskStorage({
   destination: (_, __, cb) => {
@@ -57,6 +66,7 @@ app.post('/upload', checkAuth, upload.single('image'), (req, res) => {
 })
 
 app.get('/posts', getAll)
+
 app.get('/tags', getLastTags)
 app.get('/posts/:id', getOne)
 app.post(

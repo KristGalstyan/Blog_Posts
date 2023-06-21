@@ -63,7 +63,6 @@ export const login = async (req, res) => {
       process.env.SECRET,
       { expiresIn: '30d' }
     )
-
     const { passwordHash, ...userData } = user._doc
 
     res.send({
