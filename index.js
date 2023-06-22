@@ -2,6 +2,7 @@ import express from 'express'
 import multer from 'multer'
 
 import mongoose from 'mongoose'
+import connectMongoSession from 'connect-mongodb-session'
 import cors from 'cors'
 import {
   registerValidation,
@@ -23,6 +24,7 @@ import {
 import { checkAuth, handleValidationError } from './utils/import.js'
 import { getLastTags } from './controllers/PostController.js'
 import session from 'express-session'
+
 mongoose
   .connect(process.env.DATA_BASE)
   .then(() => console.log('DB ok'))

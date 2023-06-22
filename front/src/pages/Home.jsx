@@ -7,13 +7,12 @@ import { Post } from '../components/Post'
 import { TagsBlock } from '../components/TagsBlock'
 import { CommentsBlock } from '../components/CommentsBlock'
 import { useFetchPostQuery, useGetTagsQuery } from '../redux/slices/posts.slice'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 export const Home = () => {
   const userData = useSelector((state) => state.auth.data)
   const { data, isLoading } = useFetchPostQuery()
   const tagData = useGetTagsQuery()
-
   return (
     <>
       <Tabs
